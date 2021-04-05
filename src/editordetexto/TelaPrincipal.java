@@ -5,6 +5,8 @@
  */
 package editordetexto;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ronald_PC_2
@@ -17,9 +19,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
         initComponents();
         this.setTitle("BIZUDIT");
-        
+        jTextArea.setLineWrap(true);
         setLocationRelativeTo(null);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,16 +39,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextArea = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuVerificarRepeticoes = new javax.swing.JMenuItem();
+        TirarPontuacoes = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuAjudSobre = new javax.swing.JMenuItem();
 
         jMenu3.setText("jMenu3");
 
@@ -60,12 +64,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(467, 354));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(new javax.swing.border.MatteBorder(null));
-        jTextArea1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextArea1.setMinimumSize(new java.awt.Dimension(0, 0));
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextArea.setColumns(20);
+        jTextArea.setRows(5);
+        jTextArea.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextArea.setMinimumSize(new java.awt.Dimension(0, 0));
+        jScrollPane1.setViewportView(jTextArea);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -102,16 +105,35 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu2.setText("Funções");
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setText("Verificar Repetições das Palavras");
-        jMenu2.add(jMenuItem4);
+        jMenuVerificarRepeticoes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuVerificarRepeticoes.setText("Verificar Repetições das Palavras");
+        jMenuVerificarRepeticoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuVerificarRepeticoesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuVerificarRepeticoes);
+
+        TirarPontuacoes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        TirarPontuacoes.setText("Tirar pontuações");
+        TirarPontuacoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TirarPontuacoesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(TirarPontuacoes);
 
         jMenuBar1.add(jMenu2);
 
         jMenu5.setText("Ajuda");
 
-        jMenuItem6.setText("Sobre");
-        jMenu5.add(jMenuItem6);
+        jMenuAjudSobre.setText("Sobre");
+        jMenuAjudSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAjudSobreActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuAjudSobre);
 
         jMenuBar1.add(jMenu5);
 
@@ -134,6 +156,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuAjudSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAjudSobreActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "DESENVOLVIDO COMO REQUISITO DE NOTA NA\nDISCIPLINA DE SISTEMAS MULTIMÍDIA NA FACULDADE DE  \nENGENHARIA DE COMPUTAÇÃO");
+    }//GEN-LAST:event_jMenuAjudSobreActionPerformed
+
+    private void jMenuVerificarRepeticoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuVerificarRepeticoesActionPerformed
+
+        Funcoes procPalav = new Funcoes();
+
+        //String texto=procPalav.repeticoesPalavras(jTextArea.getText());
+        // texto.replace(",", "");
+        // System.out.println(texto);
+        // jTextArea.setText(texto);
+       // MostRepetPlv mostRpetPalav= new MostRepetPlv(procPalav.repeticoesPalavras(jTextArea.getText()));
+      //  JOptionPane.showMessageDialog(this, procPalav.repeticoesPalavras(jTextArea.getText()));
+      jTextArea.setText(procPalav.repeticoesPalavras(jTextArea.getText()));
+       //new MostRepetPlv(procPalav.repeticoesPalavras(jTextArea.getText())).setVisible(true);
+       
+    }//GEN-LAST:event_jMenuVerificarRepeticoesActionPerformed
+
+    private void TirarPontuacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TirarPontuacoesActionPerformed
+        Funcoes procPalav = new Funcoes();
+
+        jTextArea.setText(procPalav.tirarPontuacao(jTextArea.getText()));
+
+
+    }//GEN-LAST:event_TirarPontuacoesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,22 +221,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem TirarPontuacoes;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenuItem jMenuAjudSobre;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuVerificarRepeticoes;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea;
     // End of variables declaration//GEN-END:variables
 }
