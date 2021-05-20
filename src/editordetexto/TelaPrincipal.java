@@ -5,6 +5,22 @@
  */
 package editordetexto;
 
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,7 +28,7 @@ import javax.swing.JOptionPane;
  * @author Ronald_PC_2
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-
+    String diretorioSalvar="";
     /**
      * Creates new form TelaPrincipal
      */
@@ -42,9 +58,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jTextArea = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuNovo = new javax.swing.JMenuItem();
+        jMenuAbrir = new javax.swing.JMenuItem();
+        jMenuSalvar = new javax.swing.JMenuItem();
+        jMenupdf = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuVerificarRepeticoes = new javax.swing.JMenuItem();
         TirarPontuacoes = new javax.swing.JMenuItem();
@@ -74,32 +91,41 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("arquivos");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Novo");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuNovo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuNovo.setText("Novo");
+        jMenuNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuNovoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(jMenuNovo);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("Abrir");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuAbrir.setText("Abrir");
+        jMenuAbrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenuAbrirActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(jMenuAbrir);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem3.setText("Salvar");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jMenuSalvar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuSalvar.setText("Salvar");
+        jMenuSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jMenuSalvarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        jMenu1.add(jMenuSalvar);
+
+        jMenupdf.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
+        jMenupdf.setText("Salvar Pdf Desktop");
+        jMenupdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenupdfActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenupdf);
 
         jMenuBar1.add(jMenu1);
 
@@ -115,7 +141,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu2.add(jMenuVerificarRepeticoes);
 
         TirarPontuacoes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
-        TirarPontuacoes.setText("Tirar pontuações");
+        TirarPontuacoes.setText("Tirar pontuações e preposições");
         TirarPontuacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TirarPontuacoesActionPerformed(evt);
@@ -145,17 +171,96 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void jMenuNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuNovoActionPerformed
+        diretorioSalvar="";
+        jTextArea.setText("");
+    }//GEN-LAST:event_jMenuNovoActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void jMenuAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAbrirActionPerformed
+       JFileChooser fc=new JFileChooser();
+        fc.showOpenDialog(this);
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+       File f= fc.getSelectedFile();
+        //jTextArea.setText(f.getPath());
+        FileReader fr = null;
+        try {
+            fr = new FileReader(f.getPath());
+            diretorioSalvar=f.getPath();
+            System.out.println(diretorioSalvar);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        LineNumberReader lnr = new LineNumberReader(fr);
+        String s, a = "";
+        try {
+            while ((s = lnr.readLine()) != null) {
+                a = a + s+"\n";
+            }
+            jTextArea.setText(a);
+        } catch (IOException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            lnr.close();
+        } catch (IOException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            fr.close();
+        } catch (IOException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuAbrirActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void jMenuSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalvarActionPerformed
+       if(diretorioSalvar.equals("")){
+           JFileChooser fc=new JFileChooser();
+        fc.showOpenDialog(this);
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+       File f= fc.getSelectedFile();
+      //jTextArea.setText(f.getPath());
+       
+       File arq = new File(f.getPath()+".bizu");//daqui pra baixo é a parte que adiciona no arquivo .txt
+        FileWriter fw = null;
+           try {
+               fw = new FileWriter(arq);
+           } catch (IOException ex) {
+               Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           try {
+               //System.out.println(map.toString());
+               fw.write(jTextArea.getText());
+           } catch (IOException ex) {
+               Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           try {
+               fw.close();
+           } catch (IOException ex) {
+               Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       
+       
+       }else{
+           File arq = new File(diretorioSalvar);//daqui pra baixo é a parte que adiciona no arquivo .txt
+        FileWriter fw = null;
+           try {
+               fw = new FileWriter(arq);
+           } catch (IOException ex) {
+               Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+           }
+        System.out.println(jTextArea.getText());
+           try {
+               fw.write(jTextArea.getText());
+           } catch (IOException ex) {
+               Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           try {
+               fw.close();
+           } catch (IOException ex) {
+               Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
+    }//GEN-LAST:event_jMenuSalvarActionPerformed
 
     private void jMenuAjudSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAjudSobreActionPerformed
         // TODO add your handling code here:
@@ -166,14 +271,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Funcoes procPalav = new Funcoes();
 
-        //String texto=procPalav.repeticoesPalavras(jTextArea.getText());
-        // texto.replace(",", "");
-        // System.out.println(texto);
-        // jTextArea.setText(texto);
-       // MostRepetPlv mostRpetPalav= new MostRepetPlv(procPalav.repeticoesPalavras(jTextArea.getText()));
-      //  JOptionPane.showMessageDialog(this, procPalav.repeticoesPalavras(jTextArea.getText()));
-      jTextArea.setText(procPalav.repeticoesPalavras(jTextArea.getText()));
-       //new MostRepetPlv(procPalav.repeticoesPalavras(jTextArea.getText())).setVisible(true);
+        
+        JOptionPane.showMessageDialog(this, "15 PALAVRAS MAIS REPETIDAS\n\n"+procPalav.repeticoesPalavras(jTextArea.getText()));
+        
+       
        
     }//GEN-LAST:event_jMenuVerificarRepeticoesActionPerformed
 
@@ -184,6 +285,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_TirarPontuacoesActionPerformed
+
+    private void jMenupdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenupdfActionPerformed
+                                                 
+        // exportar como pdf
+         Document document = new Document();
+        JFileChooser fc=new JFileChooser();
+        fc.showOpenDialog(this);
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+       File f= fc.getSelectedFile();
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(f.getPath()+".pdf"));
+            
+            document.open();
+            document.add(new Paragraph(jTextArea.getText()));
+            
+        } catch (DocumentException | FileNotFoundException ex) {
+            System.out.println("Error:"+ex);
+        }finally{
+            document.close();
+        }
+        
+        try {
+            Desktop.getDesktop().open(new File(f.getPath()+".pdf"));
+        } catch (IOException ex) {
+            System.out.println("Error:"+ex);
+        }
+        
+    }//GEN-LAST:event_jMenupdfActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,13 +357,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenuItem jMenuAbrir;
     private javax.swing.JMenuItem jMenuAjudSobre;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuNovo;
+    private javax.swing.JMenuItem jMenuSalvar;
     private javax.swing.JMenuItem jMenuVerificarRepeticoes;
+    private javax.swing.JMenuItem jMenupdf;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
